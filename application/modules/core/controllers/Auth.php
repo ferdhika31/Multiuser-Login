@@ -14,7 +14,7 @@ class Auth extends CI_Controller {
 		parent::__construct();
 
 		if($this->session->userdata('isLogin')){
-			redirect('dashboard');
+			redirect('core/dashboard');
 		}
 
 		$this->load->model('m_auth');
@@ -47,7 +47,7 @@ class Auth extends CI_Controller {
         	    	'nama'		=> $login['nama_user'],
         	    	'group_key' => $login['key_name']
 				));
-				redirect('dashboard');
+				redirect('core/dashboard');
 			}else{
 				$data['message'] = "Login failed!";
 			}

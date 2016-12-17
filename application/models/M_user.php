@@ -32,4 +32,31 @@ class M_user extends CI_Model {
         return $query;
 	}
 
+	public function getOneUser($kondisi=array()){
+		$query = $this->db->where($kondisi);
+		$query = $this->db->join($this->user_group, $this->user_group.'.user_group_id='.$this->user.'.user_group_id');
+		$query = $this->db->get($this->user);
+        $query = $query->result_array();
+
+        if(!empty($query)){
+        	return $query[0];
+        }
+	}
+
+	public function add($data=array()){
+		$query = $this->db->insert($this->user,$data);
+		$query = $this->db->insert_id();
+		return $query;
+	}
+
+	public function edit($data=array(),$idna=array()){
+		$query = $this->db->update($this->user,$data,$idna);
+		return $query;	
+	}
+
+	public function remove($where=array()){
+		$query = $this->db->delete($this->user,$where);
+		return $query;
+	}
+
 }

@@ -31,7 +31,7 @@
 				<li class="header">Main Navigation</li>
 				<!-- Optionally, you can add icons to the links -->
 				<li<?php echo($active_menu=='dashboard')? " class=\"active\"": "";?>>
-					<a href="<?php echo site_url('dashboard');?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+					<a href="<?php echo site_url('core/dashboard');?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
 				</li>
 
 				
@@ -39,19 +39,19 @@
 					<a href="#"><i class="fa fa-user"></i> <span>User</span> <i class="fa fa-angle-left pull-right"></i></a>
 					<ul class="treeview-menu">
 						<li<?php echo($active_menu=='user')? " class=\"active\"": "";?>>
-							<a href="<?php echo site_url('user');?>">User</a>
+							<a href="<?php echo site_url('core/user');?>"><i class="fa fa-circle-o "></i> User</a>
 						</li>
 						<li<?php echo($active_menu=='user_group')? " class=\"active\"": "";?>>
-							<a href="<?php echo site_url('user_group');?>">User Group</a>
+							<a href="<?php echo site_url('core/user_group');?>"><i class="fa fa-circle-o "></i> User Group</a>
 						</li>
 						<li<?php echo($active_menu=='user_pages')? " class=\"active\"": "";?>>
-							<a href="<?php echo site_url('user_pages');?>">User Pages</a>
+							<a href="<?php echo site_url('core/user_pages');?>"><i class="fa fa-circle-o "></i> User Pages</a>
 						</li>
 					</ul>
 				</li>
 
 				<li>
-					<a href="<?php echo site_url('dashboard/logout');?>"><i class="fa fa-sign-out"></i> <span>Logout</span></a>
+					<a href="<?php echo site_url('core/dashboard/logout');?>"><i class="fa fa-sign-out"></i> <span>Logout</span></a>
 				</li>
 			</ul><!-- /.sidebar-menu -->
 		</section>

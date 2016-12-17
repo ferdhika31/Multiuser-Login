@@ -14,7 +14,7 @@ class Main extends CI_Controller {
 		parent::__construct();
 
 		if(!$this->session->userdata('isLogin')){
-			redirect('auth');
+			redirect('core/auth');
 		}
 
 		// Load model
@@ -28,10 +28,13 @@ class Main extends CI_Controller {
 
 		// akun info
 		$this->global_data['akunInfo'] = $this->m_auth->ambilSatuUser(array('user_id'=> $this->session->userdata('user_id')));
+
+		// Path segment 2 setelah path core
+		$this->segement_num = 2;
 	}
 
 	protected function tampilan($view_name){
-		$url_view = $this->uri->segment(1);
+		$url_view = $this->uri->segment($this->segement_num); // 2 setelah path core
 
 		$this->load->view('meta',$this->global_data);
         $this->load->view('header',$this->global_data);
@@ -77,7 +80,7 @@ class Main extends CI_Controller {
 			}
 		}
 
-		$url_view = $this->uri->segment(1);
+		$url_view = $this->uri->segment($this->segement_num); // 2 setelah path core
 
 		if(in_array($url_view, $pagearray)){
 			$view = true;
@@ -111,7 +114,7 @@ class Main extends CI_Controller {
 			}
 		}
 
-		$url_view = $this->uri->segment(1);
+		$url_view = $this->uri->segment($this->segement_num); // 2 setelah path core
 
 		if(in_array($url_view, $pagearray_eusi)){
 			$modif = true;
@@ -120,5 +123,14 @@ class Main extends CI_Controller {
 		}
 
 		return $modif;
+	}
+
+	protected function outputJson($response=array(),$status=200){
+		$this->output
+		->set_status_header($status)
+		->set_content_type('application/json', 'utf-8')
+		->set_output(json_encode($response, JSON_PRETTY_PRINT))
+		->_display();
+		exit();
 	}
 }

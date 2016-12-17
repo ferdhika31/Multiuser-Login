@@ -37,14 +37,16 @@ class User_group extends Main{
 
 		$this->global_data['data'] = array();
 
+		$this->global_data['href_add'] = site_url('core/user_group/add');
+
 		$data = $this->m_usergroup->getAll();
 		$no=1;
 		foreach ($data as $result) {
 			$this->global_data['data'][] = array(
 				'no'				=> $no,
 				'nama'				=> $result['name'],
-				'href_permission'	=> site_url('user_group/permission/'.$result['key_name']),
-				'href_edit'			=> site_url('user_group/edit/'.$result['user_group_id'])
+				'href_permission'	=> site_url('core/user_group/permission/'.$result['key_name']),
+				'href_edit'			=> site_url('core/user_group/edit/'.$result['user_group_id'])
 			);
 			$no++;
 		}
@@ -154,7 +156,7 @@ class User_group extends Main{
 		$data = $this->m_usergroup->getOneBy(array('user_group_id'=>$id));
 		
 		if(empty($data)){
-			redirect('user_group');
+			redirect('core/user_group');
 		}
 
 		$this->global_data['datana'] = $data;
@@ -203,7 +205,7 @@ class User_group extends Main{
 	}
 
 	public function permission(){
-		$key = $this->uri->segment(3);
+		$key = $this->uri->segment(4);
 
 		$this->load->model('m_userpage');
 
@@ -265,7 +267,7 @@ class User_group extends Main{
 			$this->global_data['admin'] = $this->m_usergroup->getOneBy(array('key_name' => $key));
 
 		}else{
-			redirect('user_group');
+			redirect('core/user_group');
 		}
 
 		$this->tampilan('user_group/permission');

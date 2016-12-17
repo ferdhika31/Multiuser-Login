@@ -17,7 +17,7 @@ class M_auth extends CI_Model {
 
 	public function masuk($login=array()){
 		$query = $this->db->join($this->user_group,$this->user_group.'.user_group_id='.$this->user.'.user_group_id');
-		$query = $this->db->get_where($this->user,array('username'=>$login['username'],'password'=>$login['password']));
+		$query = $this->db->get_where($this->user,array('username'=>$login['username'],'password'=>md5($login['password'])));
 		$query = $query->result_array();
 		
 		if($query){

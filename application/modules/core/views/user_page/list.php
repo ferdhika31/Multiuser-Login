@@ -42,8 +42,9 @@
 					<?php if(!empty($message)): ?>
 			    		<?php echo $message;?>
 					<?php endif;?>
-					<a class="btn btn-primary btn-md" href="<?php echo site_url('user_group/add');?>">
-						<i class="fa fa-plus"></i> Add Group
+					<div id="alert"></div>
+					<a class="btn btn-primary btn-md" href="<?php echo $href_add;?>">
+						<i class="fa fa-plus"></i> Add Page
 					</a> <br></br>
 					<div class="box">
 						<div class="box-header with-border">
@@ -53,14 +54,14 @@
 							<table class="table table-bordered">
 								<tr>
 									<th style="width: 20px">#</th>
-									<th>Group Name</th>
+									<th>Page Name</th>
 									<th style="width: 50%">Action</th>
 								</tr>
 								<?php
 									if(!empty($data)):
 										foreach ($data as $data):
 								?>
-								<tr>
+								<tr id="page<?php echo $data['id'];?>">
 									<td>
 										<?php echo $data['no'];?>
 									</td>
@@ -68,12 +69,12 @@
 										<?php echo $data['nama'];?>
 									</td>
 									<td style="width: 50%">
-										<a class="btn btn-primary btn-xs" href="<?php echo $data['href_permission'];?>" title="Permission">
-											<i class="fa fa-users"></i> Permission
-										</a>
 										<a class="btn btn-default btn-xs" href="<?php echo $data['href_edit'];?>" title="Edit">
-											<i class="fa fa-edit"></i> Edit
+											<i class="fa fa-pencil"></i>
 										</a>
+										<button onclick="mdlHapus(<?php echo $data['id'];?>)" class="btn btn-danger btn-xs" title="Delete">
+											<i class="glyphicon glyphicon-trash"></i>
+										</button>
 									</td>
 								</tr>
 								<?php
@@ -87,6 +88,9 @@
 									endif;
 								?>
 							</table>
+							<?php if(!empty($halaman)): ?>
+								<?php echo $halaman; ?>
+							<?php endif; ?>
 						</div><!-- /.box-body -->
 					</div>
 				</div><!-- /.col -->
@@ -95,32 +99,64 @@
 	</div><!-- /.content-wrapper -->
 
 <script type="text/javascript">
-	function lihatFoto(url){
-		$("#fotona").attr("src", url);
-		$('#modalFoto').modal('show'); // show bootstrap modal
+	function mdlHapus(id){
+		$("#delId").val(id);
+		$('#mdlHapus').modal('show'); // show bootstrap modal
+	}
+
+	function hapusHalaman(){
+		var id = $("#delId").val();
+
+		$.post("<?php echo site_url('user_pages/delete');?>", { 
+			id: id
+		}, function(res) {
+			if(res.status){
+				$("#page"+id).remove();
+
+				var textAlert;
+				textAlert = "<div class=\"alert alert-success alert-dismissable\">";
+				textAlert += "	<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>";
+				textAlert += "	<h4><i class=\"icon fa fa-check\"></i> Success!</h4>";
+				textAlert += "	Messages : "+res.message;
+				textAlert += "</div>";
+
+				$("#alert").append(textAlert);
+			}else{
+				var textAlert;
+				textAlert = "<div class=\"alert alert-warning alert-dismissable\">";
+				textAlert += "	<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">×</button>";
+				textAlert += "	<h4><i class=\"icon fa fa-warning\"></i> Perhatian!</h4>";
+				textAlert += "	Messages : "+res.message;
+				textAlert += "</div>";
+
+				$("#alert").append(textAlert);
+			}
+		}, "json");
 	}
 </script>
 
-<div id="modalFoto" class="modal fade" tabindex="-1">
+<div id="mdlHapus" class="modal fade" tabindex="-1">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			<input class="form-control" id="delId" type="hidden" value="0">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h3 class="smaller lighter blue no-margin">Lihat Foto</h3>
+				<h3 class="smaller lighter blue no-margin">Confirmation</h3>
 			</div>
 
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-12" style="text-align:center;">
-						<img src="<?php echo base_url('assets/upload/alumni/default.png'); ?>" id="fotona" width="220px" height="220px">
+					<div class="col-md-12">
+						Are you sure?
 					</div>
 				</div>
 			</div>
 
 			<div class="modal-footer">
-				<button class="btn btn-sm btn-danger pull-right" data-dismiss="modal">
-					<i class="ace-icon fa fa-times"></i>
-					Close
+				<button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Cancel</button>
+				<button class="btn btn-sm btn-danger pull-right" onclick="hapusHalaman()" data-dismiss="modal">
+					<i class="ace-icon fa fa-trash"></i>
+					Delete
 				</button>
 			</div>
 		</div><!-- /.modal-content -->

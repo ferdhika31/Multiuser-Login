@@ -2,11 +2,11 @@
 	<header class="main-header">
 
 		<!-- Logo -->
-		<a href="<?php echo site_url('dashboard'); ?>" class="logo">
+		<a href="<?php echo site_url('core/dashboard'); ?>" class="logo">
 			<!-- mini logo for sidebar mini 50x50 pixels -->
 			<span class="logo-mini"><b>D</b>K</span>
 			<!-- logo for regular state and mobile devices -->
-			<span class="logo-lg"><?php echo $this->session->userdata('site_title');?></span>
+			<span class="logo-lg"><?php echo strtoupper($this->session->userdata('site_title'));?></span>
 		</a>
 
 		<!-- Header Navbar -->

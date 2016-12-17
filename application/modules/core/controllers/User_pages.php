@@ -28,7 +28,7 @@ class User_pages extends Main{
 		// Breadcumb
 		$this->global_data['breadcumb'][] = array(
 			'judul'	=> '<i class="fa fa-user"></i> User',
-			'link'	=> site_url('user')
+			'link'	=> site_url('core/user')
 		);
 		$this->global_data['breadcumb'][] = array(
 			'judul'	=> 'List User Page',
@@ -71,6 +71,8 @@ class User_pages extends Main{
 		// data
 		$page = $this->m_userpage->getAllPer($config['per_page'], $id);
 
+		$this->global_data['href_add'] = site_url('core/user_pages/add');
+
 		$this->global_data['data'] = array();
 
 		$no=1+$id;
@@ -80,7 +82,7 @@ class User_pages extends Main{
 				'id'			=> $result['user_page_id'],
 				'nama'			=> $result['page_name'],
 				'url'			=> $result['page_url'],
-				'href_edit'		=> site_url('user_pages/edit/'.$result['user_page_id'])
+				'href_edit'		=> site_url('core/user_pages/edit/'.$result['user_page_id'])
 			);
 			$no++;
 		}
@@ -98,11 +100,11 @@ class User_pages extends Main{
 		// Breadcumb
 		$this->global_data['breadcumb'][] = array(
 			'judul'	=> '<i class="fa fa-user"></i> User',
-			'link'	=> site_url('user')
+			'link'	=> site_url('core/user')
 		);
 		$this->global_data['breadcumb'][] = array(
 			'judul'	=> 'User Page',
-			'link'	=> site_url('user_pages')
+			'link'	=> site_url('core/user_pages')
 		);
 		$this->global_data['breadcumb'][] = array(
 			'judul'	=> 'Add User Page',
@@ -138,7 +140,7 @@ class User_pages extends Main{
 				$notif .= "</div>";
 				$this->session->set_flashdata('message',$notif);
 
-				redirect('user_pages');
+				redirect('core/user_pages');
 			}
         }else{
         	// Pesan validasi
@@ -150,7 +152,7 @@ class User_pages extends Main{
 				$notif .= "</div>";
 				$this->session->set_flashdata('message',$notif);
 
-				redirect('user_pages/add');
+				redirect('core/user_pages/add');
 			}
         }
 
@@ -167,11 +169,11 @@ class User_pages extends Main{
 		// Breadcumb
 		$this->global_data['breadcumb'][] = array(
 			'judul'	=> '<i class="fa fa-user"></i> User',
-			'link'	=> site_url('user')
+			'link'	=> site_url('core/user')
 		);
 		$this->global_data['breadcumb'][] = array(
 			'judul'	=> 'User Pages',
-			'link'	=> site_url('user_pages')
+			'link'	=> site_url('core/user_pages')
 		);
 		$this->global_data['breadcumb'][] = array(
 			'judul'	=> 'Edit User Page',
@@ -184,7 +186,7 @@ class User_pages extends Main{
 		$data = $this->m_userpage->getOneBy(array('user_page_id'=>$id));
 		
 		if(empty($data)){
-			redirect('user_pages');
+			redirect('core/user_pages');
 		}
 
 		$this->global_data['datana'] = $data;
@@ -213,7 +215,7 @@ class User_pages extends Main{
 				$notif .= "</div>";
 				$this->session->set_flashdata('message',$notif);
 
-				redirect('user_pages');
+				redirect('core/user_pages');
 			}
         }else{
         	// Pesan validasi
@@ -225,7 +227,7 @@ class User_pages extends Main{
 				$notif .= "</div>";
 				$this->session->set_flashdata('message',$notif);
 
-				redirect('user_pages/add');
+				redirect('core/user_pages/add');
 			}
         }
 
@@ -251,6 +253,6 @@ class User_pages extends Main{
 			}
 		}
 
-		echo json_encode($response);
+		$this->outputJson($response);
 	}
 }
